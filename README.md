@@ -40,4 +40,4 @@ python sitemap_generator.py
 ```
 
 # Credits
-[Rami Mustafa](https://github.com/rami-al-rahim).
+Made by[Rami Mustafa](https://github.com/rami-al-rahim).
