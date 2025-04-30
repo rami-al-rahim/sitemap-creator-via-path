@@ -1,4 +1,5 @@
 import os
+import time
 # data
 siteMapTemplate = '''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -49,16 +50,19 @@ else:
         print(f"Found {len(html_files)} HTML file(s):")
         urls = ''
         for file in html_files:
+            last_mod = os.path.getmtime(file)
+            last_mod_date = time.strftime('%Y-%m-%d', time.localtime(last_mod))
             content = '''
             <url>
 <loc>urls_data</loc>
 <priority>1.0</priority>
+<lastmod>lastmod</lastmod>
 </url>
-'''.replace("urls_data", file.replace(path, URL))
+'''.replace("urls_data", file.replace(path, URL)).replace('lastmod', last_mod_date)
             urls += content
             siteMap = siteMapTemplate.replace("replace_here", urls.replace('\\', "/"))
-            with open('output-sitemap.xml', 'w') as file:
+            with open('sitemap.xml', 'w') as file:
                 file.write(siteMap)
-            # see output-sitemap.xml file to see generated sitemap
+            # see sitemap.xml file to see generated sitemap
     else:
         print("No HTML files found.")
